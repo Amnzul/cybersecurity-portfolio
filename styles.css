@@ -121,6 +121,15 @@ h2 {
   text-shadow: 0 0 2px #00ff41;
 }
 
+#notes {
+  column-count: 2;
+  column-gap: 2em;
+}
+
+#notes .project-card {
+  break-inside: avoid;
+}
+
 form#contact-form {
   display: flex;
   flex-direction: column;
