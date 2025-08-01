@@ -130,6 +130,11 @@ h2 {
   break-inside: avoid;
 }
 
+#notes h2 {
+  display: block;
+  width: 100%;
+}
+
 form#contact-form {
   display: flex;
   flex-direction: column;
