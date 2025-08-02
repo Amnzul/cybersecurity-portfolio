@@ -26,19 +26,22 @@
 <h2> Network Capacity Testing Project Overview</h2>
   
 <p>This project involved conducting network capacity testing to evaluate the performance capabilities of various network endpoints within my home infrastructure. The primary objective was to verify that network hardware was operating at optimal capacity and identify any potential bottlenecks or performance issues.</p>
-<h3>Hardware</h3>
+<h2>Hardware</h2>
 <ul>
 <li>ASUS home router</li>
 <li>Windows desktop with 2.5Gb network interface</li>
 <li>Linux desktop with 1Gb network interface </li>
 <li>Cat 6a network cables</li>
 </ul>
-<h3>Software</h3>
+  
+<h2>Software</h2>
 <p>iperf3 is a free network testing utility for measuring maximum TCP and UDP bandwidth performance available at <a href="https://iperf.fr/">iperf.fr</a></p>
 <p>iperf3 works on a client-server model. We will run two instances of the software, one at each endpoint.</p>
-<h3>Environment Setup</h3>
+  
+<h2>Environment Setup</h2>
 <p><strong>Router Configuration:</strong> Enabled SSH access through the ASUS router firmware interface (Asus Router Firmware &gt; Administration &gt; System Tab &gt; Service Section &gt; Enable SSH (only on LAN)) to allow remote command line access.</p>
-<h3>Test 1 : Windows Desktop to Router</h3>
+  
+<h2>Test 1 : Windows Desktop to Router</h2>
 <p>The test runs at the command line. </p>
 <p>On my windows machine I opened two terminal windows. In the first one, I connected via ssh to my home router. I then set the iperf3 program to listen in server mode. In the second terminal window, I set iperf to connect with the available server on the router.</p>
 <p>The syntax is:</p>
@@ -49,7 +52,8 @@ iperf3 -c &lt;your server ip address&gt; (to run in client mode)</code></pre>
 <img src="iperf3_test1.png">
 
 <p>As is shown here, both the nic in the desktop pc and the router port support 2.5gb</p>
-<h3>Test 2: Linux Desktop to Router</h3>
+  
+<h2>Test 2: Linux Desktop to Router</h2>
 <p>On my linux desktop I set iperf to connect with the other instance of iperf listening on the router.</p>
   
 <img src="iperf3_test2.png">
