@@ -18,12 +18,13 @@ img {
   margin-right: auto;
 }
 
-code {
-  background: #3B3B3B !important; /* Or any color you prefer */
-  color: #00ff41;
-  padding: 0.2em 0.4em;
-  border-radius: 5px;
+pre {
+  background-color: #3B3B3B; /* Change to your desired color */
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
 }
+
 
 #matrix-rain {
   position: fixed;
