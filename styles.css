@@ -10,6 +10,14 @@ body {
   position: relative;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #matrix-rain {
   position: fixed;
   z-index: 0;
