@@ -209,7 +209,7 @@ footer {
   .notes-grid {
     grid-template-columns: 1fr;
 }
-
+}
 .notes-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
