@@ -206,4 +206,14 @@ footer {
   form#contact-form {
     max-width: 98vw;
   }
+  .notes-grid {
+    grid-template-columns: 1fr;
 }
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 1.5em;
+}
+
