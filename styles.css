@@ -18,6 +18,13 @@ img {
   margin-right: auto;
 }
 
+code {
+  background: #222a22 !important; /* Or any color you prefer */
+  color: #00ff41;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+}
+
 #matrix-rain {
   position: fixed;
   z-index: 0;
