@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Network Capacity Testing Project</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Network Capacity Testing</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="network_capacity_testing">
+
+<h2> Network Capacity Testing Project Overview</h2>
+  
+<p>This project involved conducting network capacity testing to evaluate the performance capabilities of various network endpoints within my home infrastructure. The primary objective was to verify that network hardware was operating at optimal capacity and identify any potential bottlenecks or performance issues.</p>
+<h3>Hardware</h3>
+<ul>
+<li>ASUS home router</li>
+<li>Windows desktop with 2.5Gb network interface</li>
+<li>Linux desktop with 1Gb network interface </li>
+<li>Cat 6a network cables</li>
+</ul>
+<h3>Software</h3>
+<p>iperf3 is a free network testing utility for measuring maximum TCP and UDP bandwidth performance available at <a href="https://iperf.fr/">iperf.fr</a></p>
+<p>iperf3 works on a client-server model. We will run two instances of the software, one at each endpoint.</p>
+<h3>Environment Setup</h3>
+<p><strong>Router Configuration:</strong> Enabled SSH access through the ASUS router firmware interface (Asus Router Firmware &gt; Administration &gt; System Tab &gt; Service Section &gt; Enable SSH (only on LAN)) to allow remote command line access.</p>
+<h3>Test 1 : Windows Desktop to Router</h3>
+<p>The test runs at the command line. </p>
+<p>On my windows machine I opened two terminal windows. In the first one, I connected via ssh to my home router. I then set the iperf3 program to listen in server mode. In the second terminal window, I set iperf to connect with the available server on the router.</p>
+<p>The syntax is:</p>
+<pre><code>iperf3 -s (to run in server mode)
+iperf3 -c &lt;your server ip address&gt; (to run in client mode)</code></pre>
+<p></p>
+
+<img src="iperf3_test1.png">
+
+<p>As is shown here, both the nic in the desktop pc and the router port support 2.5gb</p>
+<h3>Test 2: Linux Desktop to Router</h3>
+<p>On my linux desktop I set iperf to connect with the other instance of iperf listening on the router.</p>
+  
+<img src="iperf3_test2.png">
+  
+<p>This desktop only has a 1gb network card, so its capacity is limited by that.</p>
+<p></p>
+<h3>Performance Findings &amp; Analysis</h3>
+<pre><code>2.33 Gbits/sec / 2.5 Gbits/sec = 93% of hardware specified maximum
+930 Mbits/sec / 1000 Mbits/sec = 93% of hardware specified maximum</code></pre>
+  
+<p>The bandwidth achieved through the test was close to the anticipated maximum. In the real physical world there will always be slight deviations. These levels would be within acceptable tolerances. </p>
+<p>Cat6a cable allows 10 Gbps (Gigabits per second) up to 100 meters. The cable lengths here is about 10 meters, so cable length should not be a factor in these tests. Variations may be due to the quality of the ethernet cable. I can digress about my efforts to source the best cat6a cable, but I did sacrifice some quality in the name of affordability.</p>
+<p>I watched the CPU utilization of the router while the test was performing, all four cores bounced between 30-70% during the test. I don’t anticipate this hindered performance of the bandwidth capacity in this case.</p>
+<p><strong>Windows Desktop &amp; Router Link:</strong></p>
+
+<ul>
+<li><strong>Measured Capacity:</strong> 93% of 2.5Gb throughput achieved</li>
+<li><strong>Hardware Validation:</strong> Both the desktop NIC and router port confirmed to support 2.5Gb specifications</li>
+<li><strong>Performance Status:</strong> No bottlenecks or degradation detected</li>
+</ul>
+
+<p><strong>Linux Desktop &amp; Router Link:</strong></p>
+
+<ul>
+<li><strong>Measured Capacity:</strong> 93% of 1Gb throughput achieved</li>
+<li><strong>Hardware Validation:</strong> Both the desktop NIC and router port confirmed to support 1Gb specifications</li>
+<li><strong>Performance Status:</strong> No bottlenecks or degradation detected</li>
+</ul>
+
+<h2>Conclusions</h2>
+<p>Network performance testing was conducted within a controlled home environment. </p>
+  
+<ol>
+<li>The testing methodology successfully validated that all network endpoints are performing at their maximum hardware-specified capacities. The differential performance between the Windows desktop (2.5Gb) and Linux desktop (1Gb) directly correlates with their respective network interface card specifications.</li>
+<li>No network traffic bottlenecks or performance issues exist within the current infrastructure</li>
+<li>The testing confirms that the network environment is capable of supporting high-bandwidth applications and services without performance constraints.</li>
+</ol>
+
+<p>This can serve as a method to document baseline performance metrics for future comparative analysis.</p>
+
+<p>That’s it!</p>
+
+    
+</section>
+
+</body>
+</html>
