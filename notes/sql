@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SQL Notes</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - SQL</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="sql">
+
+<h2>SQL Notes:</h2>
+
+<div style="text-align: center;">
+  <img src="sql_notesbook.png" style="width: 50%; display: block; margin: 0 auto;">
+</div>
+  
+
+<figure class="wp-block-image size-large is-resized"><img data-attachment-id="235" data-permalink="https://mrwlabs.wordpress.com/sql/s5ncl290htvy6tbnxjyl/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png" data-orig-size="1024,1024" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="s5ncl290htvy6tbnxjyl" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png?w=1024" width="1024" height="1024" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png?w=1024" alt="Image generated with Perplexity AI" class="wp-image-235" style="width:327px;height:auto" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/s5ncl290htvy6tbnxjyl.png?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>I learned SQL and databases and had a couple internships in the late 1990s. I only recently took a refresher course in using SQL.</p>
+<p>I am storing my notes for SQL here for future reference.</p>
+<p></p>
+<h2>Notes:</h2>
+<pre>
+<code>
+    
+rows and records are used interchangeably.
+ 
+ 
+SELECT indicates which columns to return.
+FROM indicates which table to query.
+ 
+SELECT * (Select all)
+ 
+ 
+SELECT employee_id, device_id 
+FROM employees;
+(return these two columns from this table)
+ 
+SELECT customerid, city, country FROM customers;
+SELECT * FROM customers;
+ 
+SELECT customerid, city, country FROM customers ORDER BY city;
+(another example)
+ 
+ORDER BY city DESC; (descending order)
+ 
+SELECT customerid, city, country
+FROM customers
+ORDER BY country, city; (sort based on multiple columns)
+ 
+sudo mysql organization (reopen the database)
+</pre>
+</code>
+  
+<p></p>
+<p></p>
+<p></p>
+  
+<h2>Filters</h2>
+<pre>
+<code>
+*** Filters ***
+To create a filter in SQL, you need to use the keyword WHERE
+    The percentage sign substitutes for any number of other characters. 
+    The underscore symbol only substitutes for one other character.
+SELECT * FROM log_in_attempts WHERE country = 'USA'; (returns all columns from the log_in_attempts table that contain the country USA)
+SELECT * FROM log_in_attempts WHERE country LIKE 'US%'; (returns US and USA)
+ 
+ 
+SELECT device_id, operating_system FROM machines WHERE operating_system = 'OS 2';
+SELECT * FROM employees WHERE office LIKE 'South%';
+SELECT firstname, lastname, birthdate FROM employees WHERE birthdate > '1970-01-01'; (operators are < > = <= >= <> !=)
+SELECT * FROM machines WHERE event_id BETWEEN 5 AND 8; returns all records that have a value of 5, 6, 7, or 8 in the event_id column
+SELECT firstname, lastname, email, country FROM customers WHERE country = 'Canada' OR country = 'USA'; 
+SELECT firstname, lastname, email, country FROM customers WHERE NOT country = 'USA'; (AND OR NOT operators)
+SELECT firstname, lastname, email, country FROM WHERE country <> 'USA' and WHERE country != 'USA' are the same filters as WHERE NOT country = 'USA'. 
+SELECT firstname, lastname, hiredate FROM employees WHERE hiredate BETWEEN '2002-01-01' AND '2003-01-01'; (BETWEEN is another operator)
+ 
+select * from log_in_attempts where login_time BETWEEN '06:00:00' and  '07:00:00' ORDER by login_time; 
+SELECT * FROM log_in_attempts WHERE login_time > '1800' AND success = FALSE; show failed login attempts after 1800.
+SELECT * FROM log_in_attempts WHERE NOT country LIKE 'mex%'; show login attempts from outside mexico
+SELECT * FROM employees WHERE department = 'Marketing' and office LIKE 'east%';
+SELECT * FROM employees WHERE NOT department = 'Information Technology';
+</pre>
+</code>
+<p></p>
+<p></p>
+  
+<h2>Joins:</h2>
+<pre>
+<code>
+*** Joins ***
+INNER JOIN returns rows matching on a specified column that exists in more than one table. All columns in both of the tables are returned.
+SELECT * FROM employees INNER JOIN machines ON employees.device_id = machines.device_id; employees is the first table, device_id is the primary key. machines is the second, or right table, and contains device_id but its not a primary key.
+ 
+SELECT username, operating_system, employees.device_id FROM employees INNER JOIN machines ON employees.device_id = machines.device_id;
+Note: In the example query, username and operating_system only appear in one of the two tables, so they are written with just the column name. On the other hand, because device_id appears in both tables, it's necessary to indicate which one to return by specifying both the table and column name (employees.device_id).
+ 
+ 
+ 
+Outer joins expand what is returned from a join. Each type of outer join returns all rows from either one table or both tables.
+LEFT JOIN returns all the records of the first table, but only returns rows of the second table that match on a specified column. 
+ 
+SELECT * FROM employees LEFT JOIN machines ON employees.device_id = machines.device_id;
+As with all joins, you should specify the first or left table as the table that comes after FROM and the second or right table as the table that comes after LEFT JOIN. In the example query, because employees is the left table, all of its records are returned. Only records that match on the device_id column are returned from the right table, machines. 
+ 
+ 
+RIGHT JOIN returns all of the records of the second table, but only returns rows from the first table that match on a specified column. 
+ 
+SELECT * FROM employees RIGHT JOIN machines ON employees.device_id = machines.device_id;
+The query returns all records from machines, which is the second or right table. Only matching records are returned from employees, which is the first or left table.
+ 
+ 
+FULL OUTER JOIN returns all records from both tables. 
+ 
+SELECT * FROM employees FULL OUTER JOIN machines ON employees.device_id = machines.device_id;
+The results of a FULL OUTER JOIN query include all records from both tables.
+
+
+
+</pre>
+</code>
+<p></p>  
+<h2>Aggregate Functions:</h2>
+<pre>
+<code>
+  
+*** Aggregate functions ***
+To use an aggregate function, place the keyword for it after the SELECT keyword, and then in parentheses, indicate the column you want to perform the calculation on.
+ 
+ 
+SELECT COUNT(firstname) FROM customers;
+SELECT COUNT(firstname) FROM customers WHERE country = 'USA';
+ 
+COUNT returns a single number that represents the number of rows returned from your query.
+AVG returns a single number that represents the average of the numerical data in a column.
+SUM returns a single number that represents the sum of the numerical data in a column.
+</pre>
+</code>
+
+<p></p>
+<p></p>
+    
+<p>Thats all for now!</p>
+ 
+
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
