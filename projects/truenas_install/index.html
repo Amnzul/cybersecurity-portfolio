@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrueNAS Implementation Project</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - TrueNAS Install/h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="truenas_install">
+<h2>Project: TrueNAS TrueNAS Scale Install and Setup in a VM<</h2>
+
+  
+<figure class="wp-block-image size-large"><img data-attachment-id="239" data-permalink="https://mrwlabs.wordpress.com/project-truenas-scale-install-and-setup-in-a-vm/image-11/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png" data-orig-size="2487,1255" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=1024" width="1024" height="516" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=1024" alt="" class="wp-image-239" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=2045 2045w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-7.png?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p></p>
+<h2>Overview</h2>
+<p>I had heard of FreeNAS and wanted to gain experience with an enterprise grade NAS. I soon learned <a href="https://www.truenas.com/">TrueNAS </a>is the next generation of the FreeNAS project.</p>
+<p>There were a few versions to choose from in the TrueNAS ecosystem. After a bit of research I found:</p>
+<ul>
+<li>TrueNAS Enterprise is the commercial version that cost money.</li>
+<li>TrueNAS Core was being phased out.</li>
+<li>TrueNAS Scale was my option.</li>
+</ul>
+
+<p>I enjoy the open source movement as it allows me as a curious hobbyist to experiment with professional level solutions, and emulate an enterprise network in my home lab.</p>
+<p>During this project I learned that Windows environments use SMB and Linux computers typically prefer the NFS protocol.</p>
+<p>I wanted my network share to be available on both Windows and Linux computers. TrueNAS supports multi-protocol access, allowing the same dataset to be accessed with both NFS and SMB simultaneously. So that worked out well. I set up both!</p>
+<p>Truenas documentation can be found <a href="https://www.truenas.com/docs/scale/25.04/scaletutorials/">here</a>.</p>
+<p></p>
+<h2>TrueNAS OS Install:</h2>
+<p>I installed TrueNAS Scale on a virtual machine in virtualbox to provide network wide accessible storage for my home. The ISO file is available on the TrueNAS website.</p>
+<p>Virtualbox settings:</p>
+
+<ul class="wp-block-list">
+<li>Linux Oracle 64 bit (Since TrueNAS Scale is Debian based)</li>
+<li>8 GB of RAM</li>
+<li>3 virtual hard disks (20 GB for OS, 2x 100 GB for storage. TrueNAS requires 2 identical size drives)</li>
+<li>Bridged network adapter </li>
+</ul>
+
+<p></p>
+<h2>TrueNAS Configuration:</h2>
+<p>After the OS is installed, there is some setup that needs to take place to use the NAS functionality. </p>
+<p>Create a pool in TrueNAS:</p>
+  
+<ul>
+<li>Login into the web console</li>
+<li>Select Storage from the right panel</li>
+<li>Click on “Create Pool”</li>
+<li>Select the drives to use to create the Pool</li>
+<li>Select the raid level </li>
+</ul>
+
+<p>Create a dataset in TrueNAS:</p>
+<ul>
+<li>Login into the web console</li>
+<li>Select Datasets from the right panel and click on the pool that was just created</li>
+<li>Click on “Add Dataset”</li>
+<li>Name it and save.</li>
+</ul>
+
+<p>Create a user in TrueNAS:</p>
+<ul>
+<li>Login into the web console</li>
+<li>Select credentials from the right panel and click on ‘Local Users’</li>
+<li>Click on ‘Add’</li>
+<li>Fill in Name, Username, Password.</li>
+<li>Leave the remaining option default.</li>
+</ul>
+
+<p>On the TrueNAS server set permissions to allow access.</p>
+<ul >
+<li>Login into the web console</li>
+<li>Select Datasets from the right panel and choose your dataset</li>
+<li>Find the Permissions box and click ‘Edit’</li>
+<li>Allow write permission for group and other. </li>
+<li>Save.</li>
+</ul>
+
+<p>This is the quick and dirty way of allowing access to the dataset. It works just fine for a personal home network NAS. In a enterprise situation you would customize this for your users instead of allowing everyone the same access. Alternatively, use the mapall user/groups options under the adv options in the NFS Share section.</p>
+<p></p>
+<p>Share the pool with SMB (Windows) and NFS (Linux)</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="262" data-permalink="https://mrwlabs.wordpress.com/project-truenas-scale-install-and-setup-in-a-vm/image-14/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png" data-orig-size="2496,338" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=1024" width="1024" height="138" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=1024" alt="" class="wp-image-262" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=1019 1019w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=2038 2038w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-10.png?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p></p>
+<h2 class="wp-block-heading">Connect with a Linux PC:</h2>
+
+<pre ><code>
+sudo apt install nfs-common (sudo yum install nfs-utils in the red hat family)
+sudo mkdir /mnt/nfs (or wherever you want your mount point)
+sudo mount -t nfs 192.168.50.60:/mnt/MainPool/MainDataset /mnt/nfs 
+</code></pre>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="300" data-permalink="https://mrwlabs.wordpress.com/project-truenas-scale-install-and-setup-in-a-vm/image-18/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png" data-orig-size="813,550" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png?w=813" width="813" height="550" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png?w=813" alt="" class="wp-image-300" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png 813w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-14.png?w=768 768w" sizes="(max-width: 813px) 100vw, 813px"></figure>
+
+<p>The showmount -e command will show the nfs share is available to be mounted. After it is mounted, I test it by creating a file.</p>
+<p></p>
+<h2 >Connect with a Windows PC:</h2>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="258" data-permalink="https://mrwlabs.wordpress.com/project-truenas-scale-install-and-setup-in-a-vm/image-12/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png" data-orig-size="405,211" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png?w=405" loading="lazy" width="405" height="211" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png?w=405" alt="" class="wp-image-258" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png 405w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-8.png?w=300 300w" sizes="(max-width: 405px) 100vw, 405px"></figure>
+<p>Connecting to the SMB share from windows requires a username and password. Someday in the future maybe I’ll experiment with single sign on implementations.</p>
+<figure class="wp-block-image size-large"><img data-attachment-id="268" data-permalink="https://mrwlabs.wordpress.com/project-truenas-scale-install-and-setup-in-a-vm/image-16/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png" data-orig-size="457,424" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png?w=457" loading="lazy" width="457" height="424" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png?w=457" alt="" class="wp-image-268" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png 457w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-12.png?w=300 300w" sizes="(max-width: 457px) 100vw, 457px"></figure>
+<p>Tada!</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="260" data-permalink="https://mrwlabs.wordpress.com/project-truenas-scale-install-and-setup-in-a-vm/image-13/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png" data-orig-size="738,532" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png?w=738" loading="lazy" width="738" height="532" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png?w=738" alt="" class="wp-image-260" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png 738w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-9.png?w=300 300w" sizes="(max-width: 738px) 100vw, 738px"></figure>
+
+<p></p>
+<h2>Conclusions:</h2>
+
+<p>Having TrueNAS up and running can be convenient for moving files around the network. This was mainly a learning project and opportunity to expand experience with networking.</p>
+<p>Thats it for now!</p>
+
+
+
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
