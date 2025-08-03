@@ -27,18 +27,18 @@
 
 <p></p>
 
-<h2>Rules</h2>
+<h2>Rules:</h2>
 
 <pre ><code>Rules consists of three components: an action, a header, and rule options.
 Suricata processes rules in a default order: pass, drop, reject, and alert. Rule order affects the final verdict of a packet.
 The header defines the signature’s network traffic, which includes protocols, IP addresses, ports, and traffic direction.</code></pre>
 
-<h2>Log locations</h2>
+<h2>Log locations:</h2>
 
 <pre><code>/var/log/suricata/fast.log are Suricata basic alerts (depreciated)
 /var/log/suricata/eve.json Suricata default event log</code></pre>
 
-<h2>Variables</h2>
+<h2>Variables:</h2>
 
 <pre><code>$HOME_NET is a Suricata variable defined in /etc/suricata/suricata.yaml that you can use in your rule definitions as a placeholder for your local or home network to identify traffic that connects to or from systems within your organization.</code></pre>
 <p></p>
