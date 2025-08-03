@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linux CLI</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Linux</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="linux_cli">
+
+<h2>Linux CLI</h2>
+
+
+<figure class="wp-block-image size-large is-resized"><img data-attachment-id="233" data-permalink="https://mrwlabs.wordpress.com/linux-cli/vw94hvtcqzmxgonxpx4g/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png" data-orig-size="1024,1024" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="vw94hvtcqzmxgonxpx4g" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png?w=1024" width="1024" height="1024" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png?w=1024" alt="Generated with Perplexity AI" class="wp-image-233" style="width:301px;height:auto" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/vw94hvtcqzmxgonxpx4g.png?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>I have some experience with Linux. My competency grows over time.</p>
+<p>My experience with Unix based systems began in college. In the computer science building during my undergrad years there were only Sun Sparcstations. Sink or swim, there was no alternative. I was introduced to Bash in an OS scripting class in 2001. After leaving school, I focused on other things for the next twenty+ years with limited contact with Linux based systems.</p>
+<p>My home gaming PC was always windows based. But over time the annoying invasions of built-in Microsoft ads increased and more telemetry expanded my worry about how much data Microsoft was harvesting.</p>
+<p>The final straw with Microsoft was when they introduced their recall feature that would screen capture your every move every few seconds. Even after they backtracked on its rollout after an outcry of privacy concerns, the writing was on the wall. Change was due.</p>
+<p>I began by installing Linux Mint. Using Linux everyday helped me to grow more comfortable with the environment.</p>
+<p>I wanted to learn more. My goal was to become as proficient in Linux as possible. I researched on my own, joined newsletters, and followed tutorials online.</p>
+<p>I completed the Linux 101 course at <a href="http://linuxfoundation.org" target="_blank" rel="noreferrer noopener">linuxfoundation.org</a> to increase my knowledge and experience.</p>
+<p>As I complete more personal projects in Linux, I collect those experiences and add that expertise to my skillset.</p>
+<p>I recently installed Fedora to get more experience in the redhat ecosystem.</p>
+<p>I compiled all my command line notes into a text document for easy reference.</p>
+<p></p>
+<p></p>
+
+<pre><code>Command Line Interface Notes:
+
+*** Help ***
+whatis ls
+man ls
+info ls
+ls --help
+apropos -a change password (show all commands about change password, searches the man page descriptions for a specified string)
+apropos -a (option to search for multiple words)
+gnome-help (brings up linux mint documentation webpage in firefox)
+
+
+
+*** IO Redirection ***
+command &gt; /dev/null discard output of command
+
+command &lt; file (read input of command from file)
+command &gt; file (write output of command to file)
+command &gt;&gt; file (append output to file)
+command &lt;&lt; EOF (provide multiple lines of input to the command. known as here-document delimiter)
+
+
+
+*** File &amp; Directory Management ***
+ls -a list all files including hidden
+ls -l list one file per line
+ls -R list folder recursively
+ls *.txt list all .txt files
+
+pwd (print working directory)
+
+cd (remember to use tab to autofill)
+cd ~ (change to home directory)
+cd (change to home directory.)
+cd $HOME (change to home directory.)
+cd - (change to previous working directory.)
+
+pushd /temp saves the current working directory and changes to temp
+popd returns to previous working directory. 
+dirs lists the directory stack.  
+
+tree -d only show directories in the tree. 
+
+mkdir directoryname 
+rmdir directoryname removes an empty directory. 
+
+mv filename move or rename a file or directory. 
+
+rm filename remove file
+rm -i interactively prompt before each removal. 
+rm -rf forcefully remove a directory recursively and all its subdirectories. 
+rm -r (remove directory, recursive)
+rm -f (forcefully, dont ask for confirmation)
+
+file filename (show what kind of file filename is)
+stat filename (shows statistics of the file. Created, permissions changed, contents modified, accessed)
+touch -t 12091600 filename (sets the timestamp to December 9th 2009 @ 1600)
+
+rsync checks if the file being copied already exists. If it exists and there is no change in size or modification time rsync will skip copying it. 
+rsync sourcefile destinationfile 
+rsync -r (recursive)
+rsync -dry-run (to test)
+rsync -r project archivebox:archives/project
+rsync —progress -avrxH —delete sourcedir destdir 
+
+nemo (Bring up file manager from the command prompt)
+nautilus (Bring up file manager from the command prompt)
+
+
+***Remote File Management***
+Mount a remote ssh file system into your home directory.
+sshfs [user@]host:[dir] mountpoint [options]
+
+scp username@host:/path/file .  (copy remote file to current local path.)
+scp localfile host:/remotepath (copy local file to remote host.) 
+scp -r (recursively grab subdirectory)
+
+wget &lt;url&gt; (will download a webpage)
+curl -v https://www.linuxfoundation.org/projects (verbose, will allow you to read that website.)
+curl -o saved.html ht‌tp://www.mysite.com. (The contents of the main index file at the website will be saved in saved.html.)
+curl -# (shows progress bar)
+
+
+*** file permissions: ***
+drwxrwxrwx (directory, user RWX, group RWX, other RWX)
+Users can be part of many groups but files are only associated with one group.
+
+chmod u+w somefile
+chmod u+rwx,g+w,o-r myfile.txt
+
+
+Complete table of chmod numbers
+Number 	Permission Sum
+0 	– – – 	0+0+0
+1 	– – x 	0+0+1
+2 	– w – 	0+2+0
+3 	– w x 	0+2+1
+4 	r – – 	4+0+0
+5 	r – x 	4+0+1
+6 	r w – 	4+2+0
+7 	r w x 	4+2+1
+execute=1, write=2, read=4.
+
+
+sudo setfacl -R -m u:username:rwx myfolder (set file access control list)(-R will apply it all subdirectories) (give permission to myfolder to specific user without changing the ownership of the directory.)
+
+
+
+*** Networking ***
+
+Renew IP
+sudo dhcpcd
+
+Return IP Address
+ip a
+
+Enabling and disabling network card through command line
+ip link (list the interfaces)
+sudo ip link set enp3s0 down (take the interface down)
+sudo ip link set enp3s0 up (bring the interface up)
+
+nmcli is the network manager command line interface
+nmcli general status
+nmcli connection show
+nmcli connection down Ethernet-enp0s8-1(the connection name) will disable that connection.
+nmcli connection up (connection name) will enable it.
+nmcli device status
+nmcli device show (this will show ip info)
+
+netstat lists open sockets
+netstat -a list all active connections and listening ports
+netstat -s show statistics
+netstat -t show active tcp connections
+netstat -l show listening ports
+netstat -p display connections by process id
+
+ss -at (show socket statistics similar to netstat)
+
+sudo ethtool enp1s0 (will show information on the interface enp1s0 (speed, duplex)) 
+
+hostname (display hostname)
+hostname -I (display ip address)
+hostname -b myhostname (set new hostname)
+
+hostnamectl (display host)
+hostnamectl set-hostname 'new-hostname' (rename host)
+
+systemctl is-active systemd-resolved (to determine if linux is caching DNS requests)
+resolvectl statistics (will show DNS cache size)
+resolvectl flush-caches (will clear DNS cache. run statistics to verify cache size reset)
+
+sudo iptraf (command line ip traffic monitor)
+
+sudo iftop (monitor stats related to bandwidth)
+sudo iftop -i enp1s0 (monitor a specific interface)
+
+vnstat (monitor network traffic and bandwidth)
+vnstat -l (live monitoring)
+
+bmon (monitor bandwidth)
+
+macchanger -s enp1s0 (show mac address)
+
+speedtest-cli (perform speedtest using speedtest.net)
+
+
+
+*** Internet Tools ***
+host itsfoss.com (find IP of the domain)
+host 8.8.4.4 (find domain of IP)
+
+whois domainname or ip (find info on domain)
+dig itsfoss.com (show dns record)
+nslookup itsfoss.com (show dns record)
+
+
+
+
+*** HARDWARE INFO ***
+lspci lists info on all pci buses and devices
+-v -vv -vvv gives increasingly verbose info. 
+
+lsusb lists all usb buses and devices. 
+
+hwinfo shows all hardware. 
+
+dmidecode lists bios info
+dmidecode -t processor (limits the output to a topic)
+dmidecode | more Pipe to more to get a page at a time. 
+
+free -h (shows free memory in human readable units)
+
+
+
+*** Searches ***
+which firefox locate apps on the system. 
+whereis firefox locate apps on the system, including source and man pages. 
+
+find (lists all files including hidden in the current directory and all of its subdirectories with full path)
+find -iname filename (will ignore case)
+
+find -name “*.swp” -exec rm {} \; (find swap files and remove them)
+
+find / -size +10M (find files greater than 10 megabytes)
+find / -ctime 3 (find files when ownership permissions changed 3 days ago.)
+find / -atime 3 (find files last accessed 3 days ago)
+find / -mtime 3 (find files last modified 3 days ago)
+find / -mmin -30 (find files last modified less than 30 minutes ago)
+
++number is greater than 
+-number is less than
+n is equal to
+
+find . -name filename (find filename in current directory and all subdirectories)
+find ~ -name *.txt (find all txt files in home directory and all subdirectories)
+
+history (returns command history. Stored in ~/.bash_history)
+Ctrl-R to search thru history instead of hitting arrows a bunch of times 
+
+grep pattern file
+grep -i (case insensitive)
+grep -v (inverted, exclude)
+
+
+
+
+*** Processes ***
+ps (list processes, without arguments displays processes launched in this terminal window.)
+ps l (long format)
+ps aux (displays all processes for all users)
+ps -ef (-e is the flag to print all processes within the system, not just the ones from the current terminal. -f shows more detailed output)
+ps -u (displays processes for a username)
+kill 12345 (sends sigterm signal to pid allowing cleanup)
+kill -9 12345 (sends sigkill signal to pid but doesnt do cleanup)
+top (real time list of processes. Hit h for help/toggles. 1 will split cpu into cores.)
+Alternatives to top :atop,btop,htop 
+
+sudo gnome-system-monitor (shows system monitor (processes, resources, file systems % full, like task manager in gui)
+
+
+
+*** System Services ***
+sudo shutdown
+sudo reboot (issues the shutdown -r command)
+
+systemctl --type=service --state=running (list running services)
+sudo systemctl start/stop/restart httpd 
+sudo systemctl enable/disable httpd (enable or disable starting at system boot)
+sudo systemctl status httpd (check on status of the service)
+
+echo $XDG_CURRENT_DESKTOP (from gui terminal, show what desktop environment)
+
+
+
+*** Compression &amp; Archiving ***
+tar -zxvf compressedfile will unzip a tar file 
+
+Tar creates archives, it doesn’t compress automatically. 
+
+tar 
+-c create 
+-f filename 
+-x extract
+
+tar -c -f archive.tar mystuffdirectory create archive. 
+tar -x -f archive.tar extract it. 
+
+zip is old and slow, obsolete
+gzip older
+bzip2 old
+xz newest and most compression 
+(these are used for compressing single files)
+
+gzip -k file
+bzip2 -k file
+xz -k file 
+-k keeps the file
+
+gzip -d archive.tar.gz to decompress 
+bzip2 -d archive.tar.bz2 to decompress
+xz -d archive.tar.xz to decompress
+
+tar -czf file.tgz mystuffdirectory Create, using gzip compression, the file.tgz file
+tar -xjf file.tbz mystuffdirectory use bzip compression 
+tar -xJf file.txz mystuffdirectory use xz compression 
+
+gzip -r project (recursive, compress all files in the project directory.)
+
+gunzip foo decompress foo found in foo.gz (Same as gzip -d)
+
+xz foo compress foo into foo.xz and remove foo
+xz -dk foo.xz decompress foo and do not remove foo.xz
+
+tar xvf mydir.tar extract all files in mydir.tar into the mydir directory. 
+tar Jcvf mydir.tar.xz mydir create the archive and compress with xz
+tar xvf mydir.tar.gz extract all files in mydir.tar.gz into the mydir directory. 
+
+
+
+cpio reads the list of file paths from stdin and writes an archive to stdout.
+find . -type f | cpio -ov &gt; archive.cpio  (find . -type f (Recursively finds all regular files (not directories) starting from the current directory (.), Pipes the list of file names into the next command. Redirects the archive output into a file called archive.cpio.)
+cpio -ov 
+-o = copy-out mode (create an archive from input)
+-v = verbose, so you see the file names as they're added → 
+
+ls | cpio -o &gt; archive.cpio
+
+find mystuff lists out everything in the mystuff directory with its full path. 
+find mystuff | cpio -o &gt; archive.cpio (will archive the whole directory tree)
+
+
+cpio -i &lt; archive.cpio (inputs the archive.cpio file and unarchives it)
+
+cpio -idv &lt; archive.cpio (extracts all the files and recreates the directory structure saved in archive.cpio.)
+        -i = copy-in mode (extract files from an archive)
+        -d = make directories as needed when extracting
+        -v = verbose, so you see file names as they're extracted
+
+
+
+
+
+*** Version Control ***
+Clone a project to work on a local copy. 
+Pull the latest version of the project to a local copy
+Push local updates to the main project. 
+
+Staged files are committed. Which stores a permanent snapshot of the files. 
+Branch and merge to allow for work on different parts and version of a project. 
+
+Configure git to show your own info when saving changes. 
+git config --global user.name “myname”
+git config --global user.email “name@host.com”
+
+git init start a new project in the current directory. 
+git status 
+git add filename to add it to staging environment. 
+git add --all to stage all files
+git commit -m “first save point in this project” -m allows a message. Commit the staging area to the repository. 
+git commit -a automatically stage all changes files and commit to repo. 
+git log returns a history of commits
+git log --oneline (returns one commit per line)
+
+git branch myproject-newbranch create a new branch to your project. 
+git branch display list of branches. 
+git checkout myproject-newdesign switch from the master to the new branch. 
+git checkout master change to master branch. Only files in this branch will be visible. 
+git checkout -b emergencyfix will create a new branch and switch to it. 
+git merge emergencyfix will merge this branch to the master. 
+git branch -d emergencyfix delete the now unnecessary branch. 
+
+git ls-tree --name-only -r &lt;commit hash&gt; (list files, recursively, in an older commit)
+git checkout &lt;commit hash&gt; -- path/file (retrieve a single file from an older commit)
+
+Create a text file named .gitignore and list each file you want ignored by git on a separate line. Files that don’t need to be included in your git repo would be private api keys, passwords, utility settings, temp files etc.
+
+
+
+
+*** Package Managers ***
+System &gt; high level package manager &gt; low level individual package manager
+Debian &gt; apt &gt; dpkg 
+Suse &gt; zypper &gt; rpm
+Red hat &gt; dnf &gt; rpm
+
+Install package and dependencies. 
+apt install foo
+dnf install foo
+zypper install foo
+
+Remove package and dependencies 
+apt remove foo
+apt autoremove (remove unncessary dependencies)
+dnf remove foo
+zypper remove foo
+
+dpkg --configure -a (Configure all packages that have been unpacked but not yet configured.)
+
+sudo apt update (this will update the database that new versions are available)
+sudo apt upgrade (do this after sudo apt update to install new versions of software)
+sudo apt update &amp;&amp; sudo apt upgrade -y (To do everything together)
+
+sudo dnf check-upgrade
+sudo dnf update
+
+
+*** Disk Partitions &amp; File Systems ***
+lsblk (list block devices, display disk partion info)
+lsblk -e7 (filter out loop devices)
+lsblk -f (show filesystem types)
+
+sudo parted -l (show partition tables)
+sudo parted /dev/sdb (Then help)
+
+sudo fdisk -l (list partitions)
+sudo fdisk /dev/sdb (Then m for help)
+
+df -h (disk free summary in appropriate units)
+df -T (also include partition type)
+du -h --summarize myfolder (will give the myfolder size)
+
+
+sudo mount /dev/sdb1 /home/username/drive1
+
+sudo mount /dev/sda5 /home
+sudo umount/home
+
+sudo mount -a (remount everything in /etc/fstab)
+
+
+
+dd disk to disk copying. Copies raw disk space. Will delete everything at the destination. 
+dd if=/dev/sda of=sda.mbr bs=512 count=1 (will back up the master boot record.)
+
+dd if=/dev/sda1 of=file.img (if is input file, of is output file) (commonly known as disk destroyer)
+
+
+
+*** User and Groups ***
+passwd (Change Password)
+
+lastlog (lists all users and when they last logged in)
+last show history of logged in and out users
+grep "Failed password" /var/log/auth.log lists all failed logins attempts
+users (see usernamess logged in)
+whoami (identify current user)
+who (see users logged in with login time and IP)
+who -a (list all currently logged in users)
+w (show more info on who is logged in)
+chage --list anyusername (shows account password aging info)
+
+awk -F'[/:]' '{if ($3 &gt;= 1000 &amp;&amp; $3 != 65534) print $1}' /etc/passwd (list all normal users)
+lslogins lists known users
+
+id (returns uid and groups of the current user)
+sudo useradd newuser (create a new user account, set a home directory, and add a line to /etc/passwd)
+sudo useradd -m newuser (used to create a home directory. Some distros do not automatically add a home directory.)
+sudo passwd newuser to set a password for this new account. 
+sudo userdel newuser to delete. 
+sudo userdel -r fgarcia (would delete fgarcia as a user and delete all files in their home directory.)
+
+sudo groupadd newgroup 
+sudo groupdel newgroup
+groups username will show you what groups that user belongs to. 
+
+sudo usermod -a -G newgroup username will add that user to an existing group. 
+-a will append to avoid removing existing groups. 
+
+sudo usermod -G username username will remove all groups from username except its own group. 
+-G must give a complete list of groups. 
+
+sudo usermod -aG examplegroup $USER (add the user to the examplegroup)
+
+sudo usermod -aG sudo &lt;user&gt; (This will add &lt;user&gt; to the sudo group. Members of the sudo group have full sudo privileges. We need to make sure we replace &lt;user&gt; with the actual user.)
+
+sudo usermod -g groupname username (change username's primary group to groupname)
+sudo usermod -L (lock user account, deactivate user preventing logins)
+sudo usermod -U (unlock user account)
+
+sudo chown fgarcia access.txt (change the user owner of the access.txt file to fgarcia)
+sudo chown :security access.txt (change the group owner of access.txt to security,  enter a colon (:) before security to designate it as a group name)
+
+
+
+*** Scheduling Jobs ***
+Using Cron to set up auto updates
+sudo apt install cron
+sudo systemctl enable cron
+sudo systemctl start cron
+sudo nano /etc/crontab
+30 14 * * * root apt update -y &gt;&gt; /var/log/apt/automaticupdates.log (run update every day at 14:30)
+40 14 * * * root apt upgrade -y &gt;&gt; /var/log/apt/automaticupdates.log (-y is to answer yes to all)
+(Use https://cron.help for date/time syntax)
+
+crontab -e opens crontab editor.
+anacron will run jobs when the machine is back up and running. Cron doesn’t take into account shutdowns.
+
+at now + 2 day -f myscript.sh (schedule a command at a specified time.)
+atq shows queued jobs. 
+atrm 2 (remove scheduled job #2)
+
+at now + 1 min
+at&gt; echo hello world &gt; message.txt
+ctrl-d to save and exit
+
+at 11:45pm July 31
+at shutdown now
+ctrl-d
+
+at 3:50
+ 
+
+
+
+*** Text File Manipulation ***
+cat (view contents if a file)
+cat -n include line numbers. 
+tac (view contents of a file backwards) 
+
+less (view larger files one page at a time)
+less -N (includes line numbers) 
+
+head (prints first 10 lines of a file)
+head -20 filename (gives 20 lines)
+tail (prints last 10 lines of a file)
+
+wc filename gives you a word count. 
+
+sed s/pattern/replacementstring/g file1 &gt; file2 (replace all occurrences of pattern with replacementstring in file1 and save to file2. The last /g is for global)
+
+awk -F: '{ print $1 $7 }' /etc/passwd (Print the first and seventh column of the passwd file. 
+awk -F: sets the delimiter to :
+
+sort myfilename (sorts the lines based on the first character in a line)
+sort -k 3 myfilename (sorts the file based on the 3rd field.)
+
+diff file1 file2 (compare two text files)
+cmp (compare binaries byte by byte)
+diff3 (allows three text files to be compared)
+
+
+
+
+*** Text Editors ***
+nano (editor)
+vimtutor (vi tutorial)
+
+Vi commands:
+i insert mode
+Esc command mode
+
+:w write (save)
+:w filename save as
+:wq or :x write and quit 
+:q quit 
+:q! Quit without saving
+
+/pattern search forward for pattern
+?pattern search back for pattern
+n next occurrence of search pattern
+N previous occurrence
+***
+
+
+
+
+</code></pre>
+
+
+
+ 
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
