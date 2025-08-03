@@ -29,14 +29,17 @@
 <p>In this project I will attempt to see what my ISP can see from packets leaving my network under different scenarios.</p>
 <p>In this project I will also show the use of tcpdump and wireshark as packet analyzers.</p>
 
-<figure class="wp-block-image size-medium"><img data-attachment-id="507" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-overview/rz9gjwwz0ln8bxskl1io/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png" data-orig-size="1024,1024" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="rz9gjwwz0ln8bxskl1io" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png?w=1024" width="300" height="300" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png?w=300" alt="" class="wp-image-507" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png?w=600 600w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/rz9gjwwz0ln8bxskl1io.png?w=150 150w" sizes="(max-width: 300px) 100vw, 300px"></figure>
+<div style="text-align: center;">
+  <img src="data_packet.png" style="width: 50%; display: block; margin: 0 auto;">
+</div>
+  
 
 <p></p>
 <h2>Setup:</h2>
 
 <p>I have set up my home network to look as pictured for this project.</p>
 
-<figure class="wp-block-image size-large"><img data-attachment-id="511" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-overview/image-30/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png" data-orig-size="994,436" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png?w=994" width="994" height="436" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png?w=994" alt="" class="wp-image-511" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png 994w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/image-26.png?w=768 768w" sizes="(max-width: 994px) 100vw, 994px"></figure>
+<img src="home_lab_segment.png">
 
 <p>This will enable me to inspect the network traffic at multiple hops to get a feel for any differences there might be. </p>
 <p>I will inspect traffic using:</p>
