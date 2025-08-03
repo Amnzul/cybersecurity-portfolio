@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Port Scan Detection Using Suricata and Nmap Part 2</title>
+  <link rel="stylesheet" href="../../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Port Scan Detection Using Suricata and Nmap Part 2</h1>
+    <nav>
+      <a href="../../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="port_scan_detection_part2">
+
+<h2>Port Scan Detection Using Suricata and Nmap Project Overview Part 2</h2>
+<p></p>
+<p>In this second scenario I will run a different kind of port scan and try to evade the custom Suricata rules implemented in part 1.</p>
+<p></p>
+<h2>Disclaimer: </h2>
+<p>I do not condone the use or abuse of the software or techniques described here for malicious purposes. All work here was performed using my own private hardware in my personal networking lab.</p>
+
+<figure class="wp-block-image size-medium"><img data-attachment-id="555" data-permalink="https://mrwlabs.wordpress.com/project-port-scan-detection-using-suricata-and-nmap/r7gdl6npk8foe2n9ckpk/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png" data-orig-size="1024,1024" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="r7gdl6npk8foe2n9ckpk" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png?w=1024" width="300" height="300" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png?w=300" alt="Image generated with Perplexity AI" class="wp-image-555" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png?w=600 600w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/r7gdl6npk8foe2n9ckpk.png?w=150 150w" sizes="(max-width: 300px) 100vw, 300px"></figure>
+
+<p></p>
+<h2>Lab setup:</h2>
+<p>I will use the two Proxmox VMs set up from the previous lab.</p>
+
+<ul>
+<li>Target Machine: Ubuntu Linux (192.168.50.81) – runs Suricata.</li>
+<li>Attacker Machine: Fedora Linux (192.168.50.174) – runs nmap for port scanning.</li>
+</ul>
+
+<p></p>
+<h2>Start Suricata in IDS mode:</h3>
+<p>From the Ubuntu target machine run suricata.</p>
+<pre ><code>sudo suricata -c /etc/suricata/suricata.yaml -i ens18 -v</code></pre>
+
+<p></p>
+<h2>Generate Port Scan Traffic:</h3>
+<p>From the Fedora attacking machine run nmap.</p>
+<pre><code>nmap -F -sF 192.168.50.81</code></pre>
+
+<ul >
+<li>-F: This option stands for “fast scan.” Nmap scans the most common 100 ports instead of the full 65,535.</li>
+<li>-sF: This option specifies a FIN scan.</li>
+</ul>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="584" data-permalink="https://mrwlabs.wordpress.com/project-port-scan-detection-using-suricata-and-nmap-part-2/fedora-nmap-fin-results/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png" data-orig-size="738,330" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="fedora nmap fin results" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png?w=738" width="738" height="330" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png?w=738" alt="" class="wp-image-584" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png 738w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/fedora-nmap-fin-results.png?w=300 300w" sizes="(max-width: 738px) 100vw, 738px"></figure>
+
+<p>On the target Ubuntu machine. Check the Suricata logs.</p>
+
+<pre><code>cat /var/log/suricata/fast.log</code></pre>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="585" data-permalink="https://mrwlabs.wordpress.com/project-port-scan-detection-using-suricata-and-nmap-part-2/ubuntusuricatanotdetected/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png" data-orig-size="727,63" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="ubuntusuricatanotdetected" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png?w=727" width="727" height="63" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png?w=727" alt="" class="wp-image-585" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png 727w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatanotdetected.png?w=300 300w" sizes="(max-width: 727px) 100vw, 727px"></figure>
+
+<p>The logs are clear. Nmap has successfully completed a port scan. Suricata is NOT catching this activity. At this point Nmap is undetected!</p>
+<p></p>
+<h2>Create a new rule to enhance security:</h2>
+<p>To catch FIN port scans I will add a new rule to Suricata.</p>
+<p>Open the custom port scan detection rules file from the first scenario:</p>
+
+<pre><code>sudo nano /etc/suricata/rules/local.rules</code></pre>
+<p>Add this NEW rule below the original:<br>alert tcp any any -&gt; $HOME_NET any (msg:”FIN Port Scan”; flags:F; threshold: type threshold, track by_src, count 3, seconds 10; sid:1000003; rev:1;)</p>
+
+<p>**Rule Explanation:**</p>
+<ul>
+<li>‘alert tcp’ – Triggers on TCP traffic</li>
+<li>‘any any -&gt; $HOME_NET any’ – Any source to our network, any port</li>
+<li>‘flags:F’ – Detects FIN packets</li>
+<li>‘threshold: type threshold, track by_src, count 3, seconds 10’ – Alert if 3+ SYN packets from same source in 10 seconds</li>
+<li>‘sid:1000003’ – Unique rule ID</li>
+</ul>
+
+<p>FIN packets normally only appear when closing legitimate connections.</p>
+<p>FIN packets are rare in normal traffic. Closed ports should respond with RST. Multiple FINs from the same source is highly suspicious. A lower threshold catches stealth scans quickly.</p>
+<h2>Retest!</h2>
+<p>With this new rule in place, stop Suricata and restart to reload the new rule.</p>
+<p>Now run Nmap again.</p>
+<pre><code>nmap -F -sF 192.168.50.81</code></pre>
+<p></p>
+<p>Check the Suricata logs:</p>
+
+<pre><code>sudo tail -f /var/log/suricata/fast.log</code></pre>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="588" data-permalink="https://mrwlabs.wordpress.com/project-port-scan-detection-using-suricata-and-nmap-part-2/ubuntusuricatafindetected/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png" data-orig-size="1500,591" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="ubuntusuricatafindetected" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=1024" loading="lazy" width="1024" height="403" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=1024" alt="" class="wp-image-588" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatafindetected.png 1500w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>The log shows Suricata has detected the FIN packets using the new custom rule.</p>
+<p></p>
+
+<h2>Recreate with Packet Capture:</h3>
+<p>I took a packet capture during both of these scenarios for later analysis. To run this packet capture through Suricata use the following command.</p>
+
+<pre><code>mkdir pcap_analysis
+sudo suricata -r portscanFINpacketcapture.pcap -c /etc/suricata/suricata.yaml -S /etc/suricata/rules/local.rules -v -k none -l pcap_analysis/</code></pre>
+
+<ul>
+<li>-r will read a packet capture file</li>
+<li>-c specify path to config file</li>
+<li>-S specify custom rule file</li>
+<li>-v verbose mode</li>
+<li>-k none disable all checksum checks</li>
+<li>-l will designate a custom log directory</li>
+</ul>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="595" data-permalink="https://mrwlabs.wordpress.com/project-port-scan-detection-using-suricata-and-nmap-part-2/ubuntusuricatalogs/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png" data-orig-size="755,197" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="ubuntusuricatalogs" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png?w=755" loading="lazy" width="755" height="197" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png?w=755" alt="" class="wp-image-595" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png 755w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/07/ubuntusuricatalogs.png?w=300 300w" sizes="(max-width: 755px) 100vw, 755px"></figure>
+
+<p>With this packet capture I have a known traffic pattern. This can be useful for offline analysis without running the live scan repeatedly to perfect custom rules. </p>
+<p></p>
+<p></p>
+<h2>Conclusion:</h2>
+
+<p>Designing and running this project has taught me about various kinds of port scans and how not all intrusion detection rules will trigger on each one. Setting thresholds properly will balance between a true alert and a false positive.</p>
+<p>Experimenting with cybersecurity is an excellent way to gain experience and develop cybersecurity defenses.</p>
+  
+
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
