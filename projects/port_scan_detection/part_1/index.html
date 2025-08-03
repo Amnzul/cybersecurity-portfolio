@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Network Capacity Testing Project</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Port Scan Detection Using Suricata and Nmap</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="network_capacity_testing">
+
+<h2>Port Scan Detection Using Suricata and Nmap Project Overview</h2>
+<p></p>
+<p>In the realm of network security, detecting unauthorized access attempts is crucial for safeguarding sensitive information and maintaining the integrity of systems. One common method employed by attackers is port scanning, which involves probing a network to identify open ports and services. This project aims to utilize Suricata, an open-source network threat detection engine, to effectively detect and analyze port scans on a network.</p>
+<p></p>
+<h2 class="wp-block-heading">Disclaimer: </h2>
+<p>I do not condone the use or abuse of the software or techniques described here for malicious purposes. All work here was performed using my own private hardware in my personal networking lab.</p>
+
+<img src="port_scan_ai_gen.png"
+
+<p></p>
+<h2>Lab setup:</h2>
+<p>This required two computers (I used Proxmox VMs):</p>
+<ul>
+<li>Target Machine: Ubuntu Linux (192.168.50.81) – runs Suricata.</li>
+<li>Attacker Machine: Fedora Linux (192.168.50.174) – runs nmap for port scanning.</li>
+</ul>
+
+<p>Any Linux distro should work. I had template VMs set for Ubuntu and Fedora ready to go so used them for convenience.</p>
+<p>Install Suricata on the target Ubuntu system.</p>
+<pre ><code>sudo apt install suricata</code></pre>
+<p></p>
+<p>Check the network interface name. This is needed in the next step.</p>
+<pre ><code>ip addr show</code></pre>
+<p></p>
+<p>Edit the main Suricata config file:</p>
+<pre ><code>sudo nano /etc/suricata/suricata.yaml</code></pre>
+
+<p>Find and modify the interface in this section:<br>af-packet:<br>– interface: eth0 # Change to your network interface name</p>
+<p></p>
+<p>Create a custom port scan detection rules file:</p>
+<pre ><code>sudo nano /etc/suricata/rules/local.rules</code></pre>
+
+<p>Add this single rule:<br>alert tcp any any -&gt; $HOME_NET any (msg:”Port Scan Detected”; flags:S; threshold: type threshold, track by_src, count 5, seconds 10; sid:1000001; rev:1;)</p>
+<p>**Rule Explanation:**</p>
+<ul >
+<li>‘alert tcp’ – Triggers on TCP traffic</li>
+<li>‘any any -&gt; $HOME_NET any’ – Any source to our network, any port</li>
+<li>‘flags:S’ – Detects SYN packets</li>
+<li>‘threshold: type threshold, track by_src, count 5, seconds 10’ – Alert if 5+ SYN packets from same source in 10 seconds</li>
+<li>‘sid:1000001’ – Unique rule ID</li>
+</ul>
+
+<p></p>
+<p>Edit the Suricata config to include your custom rules:</p>
+<pre ><code>sudo nano /etc/suricata/suricata.yaml</code></pre>
+
+<p>Find the `rule-files` section and add:<br>rule-files:<br>– local.rules<br>Ensure the path where the rules files are stored is the same as the path specified in the yaml file.</p>
+<p></p>
+<h2>Start Suricata in IDS mode</h2>
+
+<pre><code>sudo suricata -c /etc/suricata/suricata.yaml -i ens18 -v</code></pre>
+<ul>
+<li>The -c option specifies the configuration file that Suricata should use.</li>
+<li>The -i option specifies the network interface that Suricata should listen to for traffic.</li>
+<li>The -v option increases the verbosity of the output.</li>
+</ul>
+
+<p></p>
+<h2>Install Nmap on the attacker Fedora machine</h2>
+
+<pre><code>sudo dnf install nmap</code></pre>
+
+<img src="fedora-install-nmap.png">
+<p></p>
+<p>I wanted to get a packet capture for later analysis. I did so here in a separate terminal window before starting the port scan. This is optional.</p>
+
+<pre><code>tcpdump -w portscanpacketcapture.pcap</code></pre>
+
+<p></p>
+<h2>Generate Port Scan Traffic:</h2>
+
+<pre><code>nmap -F -sS 192.168.50.81</code></pre>
+
+<ul class="wp-block-list">
+<li>-F: This option stands for “fast scan.” Nmap scans the most common 100 ports instead of the full 65,535.</li>
+<li>-sS: This option specifies a SYN scan.</li>
+</ul>
+
+<img src="nmap-results.png">
+
+<p>In the image above, ports 22, 3389, and 3390 are shown as open. I opened these ports on purpose for easy access to my virtual machines in my local network. </p>
+<p>Nmap sends SYN packets (which are used to initiate a TCP connection) to the target ports. The response from the target will indicate whether the port is open, closed, or filtered:</p>
+
+<ul>
+<li>If the port is open, the target responds with a SYN-ACK packet.</li>
+<li>If the port is closed, the target responds with a RST (reset) packet.</li>
+<li>If the port is filtered (by a firewall), there may be no response or an ICMP unreachable message.</li>
+</ul>
+
+<p>The stealthiness of a SYN scan comes from the fact that it does not complete the TCP handshake. In a SYN scan, Nmap sends the SYN packet but does not send the final ACK. This means that the connection is never fully established, which can help avoid detection by some security systems that log completed connections.</p>
+<p></p>
+<p>Back on the target Ubuntu machine. check the Suricata logs:</p>
+<pre><code>sudo tail -f /var/log/suricata/fast.log</code></pre>
+
+<ul>
+<li>The -f option stands for “follow.” Tail will display the last few lines of the file and continue to monitor the file for any new lines that are added. As new lines are appended to the file, they will be displayed in real-time in the terminal.</li>
+</ul>
+
+<p></p>
+<p>The log shows Suricata has detected the SYN packets using the custom rule I defined.</p>
+  
+<img src="suricata-fast-log.png">
+
+<p></p>
+<h2>Conclusion:</h2>
+<p>I got some experience using Nmap and Suricata. I learned there are many different kinds of port scans and you need different rules to detect them in Suricata. This seems like it can be a rabbit hole with all the options for defining rules.</p>
+<p>This simple setup demonstrates you can install, configure, and operate Suricata for basic threat detection. This project shows the importance of network monitoring and the role of tools like Suricata in enhancing cybersecurity defenses
+  
+
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
