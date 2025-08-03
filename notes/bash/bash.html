@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bash Notes</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Bash</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="bash">
+
+<h2>Bash Notes</h2>
+
+<img src="bash_gear.png">
+<p>Occasionally I do a task enough, that it would be helpful to automate it.  </p>
+<p>I took some notes on syntax from the coursera cybersecurity module on bash and am going to store them here for easy reference.</p>
+<p>Bash scripting notes:</p>
+<h2 >Variables:</h2>
+
+<pre ><code>#!/bin/bash
+# Interactive reading of a variable
+echo "ENTER YOUR NAME"
+read name
+# Display variable input
+echo The name given was :$name</code></pre>
+
+
+
+<pre ><code>## *** *** *** ***
+
+$0	Script name
+$1	First parameter
+$2, $3, etc.	Second, third parameter, etc.</code></pre>
+
+
+
+<pre ><code>## *** *** *** ***
+
+environment variables must be prefixed with the $ symbol, as in $HOME
+
+MYCOLOR=blue // sets the value of the MYCOLOR variable to blue:
+
+By default, the variables created within a script are available only to the subsequent steps of that script. Any child processes (sub-shells) do not have automatic access to the values of these variables. To make them available to child processes, they must be promoted to environment variables using the export statement, as in:
+
+export VAR=value
+
+## *** *** *** ***</code></pre>
+
+
+
+<h2 >IF Conditional Syntax:</h2>
+
+<pre><code>&amp;&amp;	AND	
+||	OR	
+!	NOT
+
+[ $number1 -gt $number2 ]
+
+The operator -gt returns TRUE if number1 is greater than number2.
+
+## *** *** *** ***
+
+if [ string1 == string2 ] ; then
+   ACTION
+fi
+
+## *** *** *** ***
+
+in the following example, an if statement checks to see if a certain file exists, and if the file is found, it displays a message indicating success or failure:
+
+if [ -f "$1" ]
+then
+    echo file "$1" exists 
+else
+    echo file "$1" does not exist
+fi
+
+## *** *** *** ***
+
+
+if [ -x /etc/passwd ] ; then
+    ACTION
+fi
+
+the if statement checks if the file /etc/passwd is executable, which it is not.
+
+## *** *** *** ***
+
+-e file	Checks if the file exists
+-d file	Checks if the file is a directory
+-f file	Checks if the file is a regular file (i.e., not a symbolic link, device node, directory, etc.)
+-s file	Checks if the file is of non-zero size
+-g file	Checks if the file has sgid set
+-u file	Checks if the file has suid set
+-r file	Checks if the file is readable
+-w file	Checks if the file is writable
+-x file	Checks if the file is executable
+
+
+-eq	Equal to
+-ne	Not equal to
+-gt	Greater than
+-lt	Less than
+-ge	Greater than or equal to
+-le	Less than or equal to
+</code></pre>
+
+
+
+<h2 >Strings:</h2>
+
+<pre><code>[[ string1 &gt; string2 ]]	// Compares the sorting order of string1 and string2
+[[ string1 == string2 ]] // Compares the characters in string1 with the characters in string2
+myLen1=${#string1} // Saves the length of string1 in the variable myLen1</code></pre>
+
+<p></p>
+
+<pre><code>## *** *** *** ***
+
+cat file_test.sh
+#!/bin/bash
+
+echo "Give a filename to check to see if it exists"
+read filename
+
+if [[ -f "$filename" ]] ; then
+echo "$filename exists"
+else
+echo "$filename does not exist"
+fi
+
+## *** *** *** ***
+</code></pre>
+
+<p></p>
+<p></p>
+<p></p>
+
+
+
+<p>Thats all for now!</p>
+ 
+
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
