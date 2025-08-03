@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project: What does my ISP see? Analyzing Packets. Overview. </title>
+  <link rel="stylesheet" href="../../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Project: What does my ISP see? Analyzing Packets. Overview</h1>
+    <nav>
+      <a href="../../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="network_capacity_testing">
+
+<h2> Project: What does my ISP see? Analyzing Packets. Overview</h2>
+
+ 
+<p>In this project I will attempt to see what my ISP can see from packets leaving my network under different scenarios.</p>
+<p>In this project I will also show the use of tcpdump and wireshark as packet analyzers.</p>
+
+<div style="text-align: center;">
+  <img src="data_packet.png" style="width: 50%; display: block; margin: 0 auto;">
+</div>
+  
+
+<p></p>
+<h2>Setup:</h2>
+
+<p>I have set up my home network to look as pictured for this project.</p>
+
+<img src="home_lab_segment.png">
+
+<p>This will enable me to inspect the network traffic at multiple hops to get a feel for any differences there might be. </p>
+<p>I will inspect traffic using:</p>
+
+<ul>
+<li>Tcpdump, </li>
+<li>Wireshark, </li>
+<li>OPNSense <a href="https://www.zenarmor.com/docs/opnsense">Zenarmor </a>Plugin</li>
+</ul>
+
+<p></p>
+<p></p>
+<h2>Scenarios:</h2>
+
+<p>Scenario 1: HTTP: Port 80 in the clear browsing.</p>
+<p>Scenario 2: HTTPS: Port 443 browsing.</p>
+<p>Scenario 3: Brave Browser’s Private Tor Tab.</p>
+<p>Scenario 4: HTTPS + DoH.</p>
+<p>Scenario 5: VPN.</p>
+<p></p>
+<hr>
+
+<p>Scenario 1: HTTP port 80 browsing. Breakdown:</p>
+<p>HTTP traffic is totally in the clear, no encryption. We should expect to see all data in transit. Unencrypted http traffic is outdated as usernames and passwords are passed in plain text, this should never be used, and hopefully most browsers warn users if they visit a http site.</p>
+<hr>
+
+<p>Scenario 2: HTTPS port 443 browsing. Breakdown:</p>
+<p>HTTPS traffic is encrypted, so the contents of a website should not be seen, nor which particular page of a website was retrieved. We should still expect to see the destination IP, which can be resolved back to the website visited.</p>
+<hr>
+
+<p>Scenario 3: Brave Tor feature. Breakdown:</p>
+<p>Brave has a built in feature to open a tab in TOR mode. TOR should be anonymous but does opening a new tab in the brave browser fulfill this expectation?</p>
+
+<hr>
+<p>Scenario 4: HTTPS + DoH. Breakdown:</p>
+<p>DOH is DNS over HTTPS. DNS requests over port 53 are also unencrypted. That means traffic is visible that your browser requested the IP address of <a href="http://www.duckduckgo.com" rel="nofollow">http://www.duckduckgo.com</a>. DOH will encrypt your DNS requests so lets see what that looks like.</p>
+
+<hr>
+<p>Scenario 5: VPN. Breakdown:</p>
+<p>A VPN service encapsulates your network traffic from your computer to their server. That server then acts as you to the world. This way the traffic between you and your internet service provider (home ISP, or random coffee shop) is fully encrypted and your ISP, or whoever you get your wifi from, should not be able to read that traffic.</p>
+<p>That VPN provider now acts as your ISP in a way, and can see your traffic. You are shifting who sees your traffic from the ISP to your VPN provider. This means you are trusting that VPN provider more than your ISP. Which makes sense if you connect at a random wifi hotspot.</p>
+<p>The ISP will still see you are connected to a VPN and many online services have ways of detecting this.</p>
+
+<hr>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+  
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
