@@ -28,7 +28,7 @@
 <p>This project began with a simple objective: gain hands-on experience deploying and configuring an enterprise-grade firewall solution. Over time, it evolved into a comprehensive network security implementation that encompasses traffic monitoring, packet analysis, and network segmentation within my home laboratory environment, serving as a practical application of defense in depth security principles.</p>
 <p>While admittedly overkill for a residential network—especially given my low-risk security profile and good security hygiene practices—this project provided valuable learning opportunities and practical experience with enterprise security technologies. The decision was driven by curiosity, it was an area of interest, and I could do it, so I did.</p>
 
-<img src="opnsense_Dashboard.png">
+<img src="opnsense_dashboard.png">
   
 <h2 >Firewall Choice</h2>
 <p>OPNsense and pfSense are both major open-source next-gen firewall and routing software options, based on FreeBSD with OPNsense being a fork of pfSense. The systems offer basically the same functionality, and performance. After reading a few <a href="https://teklager.se/en/pfsense-vs-opnsense/">comparison reviews online</a>, I chose to go with OPNSense for my home network.</p>
@@ -39,7 +39,7 @@
 <p>I first installed OPNSense on a vm and once I gained some confidence, moved to dedicated hardware.</p>
 <p>The implementation required minimal hardware considerations, just a PC with dual Ethernet network interface cards. My home internet service is 1 gigabit fiber optic. I saw no need to upgrade to 2.5 gb network ports. The PC only has a N150 Notebook CPU in it, and even running the Zenarmor Plugin  CPU utilization hovers around 3%. The PC has built-in wireless interface which serves as the third network interface for the administrative console access.</p>
 
-<img src="firewall_ai_gen">
+<img src="firewall_ai_gen.png">
 
 <h2>Security Policy Development</h2>
 <p>Through implementation, I discovered firewalls can operate under two primary approaches:</p>
