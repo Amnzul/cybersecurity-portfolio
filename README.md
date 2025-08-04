@@ -1,3 +1,3 @@
-This portfolio serves as a repository of notes and projects in computer networking and cybersecurity.
+This portfolio serves as a repository for notes and projects in my computer networking and cybersecurity journey.
 
 https://amnzul.github.io/cybersecurity-portfolio/
