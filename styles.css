@@ -25,6 +25,11 @@ pre {
   overflow-x: auto;
 }
 
+/* Normal link */
+a { color: #00FFFF; } /* cyan */
+
+/* Visited link */
+a:visited { color: #CC00CC; } /* Purple/magenta */
 
 #matrix-rain {
   position: fixed;
