@@ -84,30 +84,30 @@
 <h2>On the firewall beyond the router:</h2>
 <p>Inspecting the firewall’s live logs showed no DNS requests for Duckduckgo. This makes sense since they are encrypted.</p>
 
-<img src="scenario4httpsdohopnzenarmordnsduckduckgo.png">
+<img src="scenario4httpsdohOPNzenarmordnsduckduckgo.png">
 
 <p>The firewall did see the same cloudflare DNS traffic as the Ubuntu workstation.</p>
 
-<img src="scenario4httpsdohopnzenarmordnscloudflare.png">
+<img src="scenario4httpsdohOPNzenarmordnscloudflare.png">
 
 <p>In the TLS tab of the live logs the firewall does show traffic to Duckduckgo. </p>
 
-<img src="scenario4httpsdohopnzenarmortls.png">
+<img src="scenario4httpsdohOPNzenarmortls.png">
 
 <p>I am assuming the firewall is doing automatic lookups to the IP address to show this information.</p>
 <p></p>
 <p>I loaded the packet capture from this firewall into Wireshark for further analysis.</p>
 <p>Wireshark is filtering out port 53 to view DNS queries. Seen in here is the DNS request for cloudflare but no mention of Duckduckgo itself.</p>
 
-<img src="scenario4httpsdohopnwiresharkdns.png">
+<img src="scenario4httpsdohOPNwiresharkdns.png">
 
 <p>Wireshark filtering for Duckduckgo only gives us encrypted traffic.</p>
 
-<img src="scenario4httpsdohopnwiresharkfilterduckduckgo.png">
+<img src="scenario4httpsdohOPNwiresharkfilterduckduckgo.png">
 
 <p>Wireshark filtering for the Duckduckgo IP address we found previous shows encrypted traffic but nothing is able to be made out in terms of content.</p>
 
-<img src="scenario4httpsdohopnwiresharkfilterduckduckgoip.png">
+<img src="scenario4httpsdohOPNwiresharkfilterduckduckgoip.png">
 
 <p></p>
 <p></p>
