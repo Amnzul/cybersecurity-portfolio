@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project: What does my ISP see? Analyzing Packets. Scenario 5: VPN </title>
+  <link rel="stylesheet" href="../../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Project: What does my ISP see? Analyzing Packets. Scenario 5: VPN</h1>
+    <nav>
+      <a href="../../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="analyzing_packets">
+
+<h2> Project: What does my ISP see? Analyzing Packets. Scenario 5: VPN.</h2>
+<p></p>
+<p></p>
+<h2>Scenario 5: VPN. Breakdown:</h2>
+<p></p>
+<h2>Overview</h2>
+<p></p>
+<p>A VPN service encapsulates your network traffic from your computer to their server. That server then acts as you to the world. This way the traffic between you and your internet service provider (home ISP, or random coffee shop) is fully encrypted and your ISP, or whoever you get your wifi from, should not be able to read that traffic.</p>
+<p>That VPN provider now acts as your ISP in a way, and can see your traffic. You are shifting who sees your traffic from the ISP to your VPN provider. This means you are trusting that VPN provider more than your ISP. Which makes sense if you connect at a random wifi hotspot.</p>
+<p>The ISP will still see you are connected to a VPN and many online services have ways of detecting this.</p>
+<p></p>
+<h2>Setup</h2>
+<p>I set up a new virtual machine with Linux Ubuntu installed and Firefox in previous scenarios. I am continuing to use the same operating system.</p>
+<p>This time I have installed a VPN and turn the killswitch on. This should prevent any packets from leaking outside the VPN service.</p>
+<p>I will again look to capture packets from the same Ubuntu host that is browsing to see what exits the local host, and again on the OPNSense firewall between my router and the ISP ONT to see what exits my home network. I will also examine the Zenarmor NexGen Firewall Plugin live logs to watch for connections being made and traffic.</p>
+<p>I hope to see only encrypted traffic in this scenario.</p>
+<p></p>
+<p></p>
+<hr>
+<h2>Activity on the local host:</h2>
+<p>The website used will be <a href="https://ipleak.net/">https://ipleak.net/</a>. I set all devices to capture traffic, then load the webpage.</p>
+  
+<figure class="wp-block-image size-large"><img data-attachment-id="517" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnurl/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png" data-orig-size="1210,762" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnurl" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=1024" width="1024" height="644" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=1024" alt="" class="wp-image-517" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnurl.png 1210w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>I capture all traffic using tcpdump and write it out to a file.</p>
+<pre><code>sudo tcpdump -w scenario4httpsdohubuntu.pcap</code></pre>
+<p>I switch VPN modes to include VPN Obfuscate and Tor over VPN and reload the webpage after each change. I tested these modes together in one packet capture because I dont expect it to make any difference as far as the traffic seen in transit from my end.</p>
+<p></p>
+<p>Reading the packet capture file and filtering for port 53 shows all the DNS queries. Ipleak is not in the list of requests so this must be encrypted and not able to be deciphered. The only thing in the list are nordvpn and a few cloudflare IPs.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="519" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnubuntutcpdumpport53/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png" data-orig-size="1128,159" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnubuntutcpdumpport53" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=1024" width="1024" height="144" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=1024" alt="" class="wp-image-519" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpport53.png 1128w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>There were no visible ‘GET’ commands and Ipleak did not appear anywhere in the packet capture, either with its domain name or IP. </p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="520" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnubuntutcpdumpfilteripleak/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png" data-orig-size="1029,629" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnubuntutcpdumpfilteripleak" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=1024" width="1024" height="625" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=1024" alt="" class="wp-image-520" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=1022 1022w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilteripleak.png 1029w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>I next searched for the VPN service.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="521" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnubuntutcpdumpfilternord/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png" data-orig-size="1215,677" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnubuntutcpdumpfilternord" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=1024" loading="lazy" width="1024" height="570" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=1024" alt="" class="wp-image-521" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnubuntutcpdumpfilternord.png 1215w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>Other than the connection to the VPN, nothing else could be seen from this packet capture on the Ubuntu host.</p>
+<p></p>
+<hr>
+<h2>On the firewall beyond the router:</h2>
+<p>Inspecting the firewall’s live logs showed no DNS requests for Ipleak. This makes sense since they are encrypted.</p>
+<p></p>
+<p>The firewall did see the TLS encrypted connections to the VPN service.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="531" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnopnzenarmortls-2/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png" data-orig-size="2541,443" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnOPNzenarmortls" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=1024" loading="lazy" width="1024" height="178" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=1024" alt="" class="wp-image-531" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=1021 1021w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=2042 2042w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnzenarmortls-1.png?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p></p>
+<p></p>
+<p>I loaded the packet capture from this firewall into Wireshark for further analysis.</p>
+<p>Wireshark is filtering out port 53 to view DNS queries. Seen in here is the UDP traffic for the VPN.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="527" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnopnwiresharkfilternorddns/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png" data-orig-size="1238,460" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnOPNwiresharkfilternorddns" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=1024" loading="lazy" width="1024" height="380" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=1024" alt="" class="wp-image-527" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternorddns.png 1238w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>Wireshark filtering for Ipleak but we see nothing. It must all be encapsulated in encrypted traffic.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="528" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnopnwiresharkfilteripleak/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png" data-orig-size="1233,193" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnOPNwiresharkfilteripleak" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=1024" loading="lazy" width="1024" height="160" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=1024" alt="" class="wp-image-528" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilteripleak.png 1233w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p>Wireshark filtering for the the VPN. All It detects is the one TLS packet.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="529" data-permalink="https://mrwlabs.wordpress.com/project-what-does-my-isp-see-analyzing-packets-scenario-5/scenario5vpnopnwiresharkfilternord/" data-orig-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png" data-orig-size="1230,676" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="scenario5vpnOPNwiresharkfilternord" data-image-description="" data-image-caption="" data-medium-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=300" data-large-file="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=1024" loading="lazy" width="1024" height="562" src="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=1024" alt="" class="wp-image-529" srcset="https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=1024 1024w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=150 150w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=300 300w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png?w=768 768w, https://mrwlabs.wordpress.com/wp-content/uploads/2025/06/scenario5vpnopnwiresharkfilternord.png 1230w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<p></p>
+<p></p>
+<p>This is the last hop where I can capture packets. This is the same data that is being seen outside my home network. </p>
+<p></p>
+<p></p>
+<hr>
+<h2>Conclusion:</h2>
+<p></p>
+<p>Anyone intercepting this traffic can only see the connection to the VPN service itself. Everything is encapsulated inside this connection. Once this traffic reaches the VPN server it becomes encapsulated and proceeds to its final destination.</p>
+<p>This is the equivalent of sending an encoded letter inside a package through the mail to an intermediary who opens the package and sends the letter to its real destination.</p>
+<p>If someone inspects your package they see traffic between you and the intermediary. If someone farther along sees your letter, they only see traffic between the intermediary and the destination.</p>
+<p>There are still plenty of ways of being tracked on the internet. But this method is one of the ways to encapsulate your traffic and limit the eavesdropping possibilities from your local wifi hotspot or ISP.</p>
+
+  
+  
+  
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+
+</body>
+</html>
