@@ -26,9 +26,9 @@
 <h2> Certificate SSH Login Project Overview</h2>
 
 <p>This projects starts with the basic assumption that SSH Server is already running on your target server, and you have a user login on that machine set up.</P>
-<P>To use an SSH certificate (key-based authentication) instead of a password to log in remotely we need to first generate a key.</P>
+<P>To use an SSH certificate (key-based authentication) instead of a password to log in remotely we need to first generate a key. We then copy that key to the server, and finally, test the connection to ensure it works.</P>
 
-<h2?Generate an SSH Key Pair on the Local Machine:</h2>
+<h2>Generate an SSH Key Pair on the Local Machine:</h2>
 
 <pre><code>ssh-keygen -t rsa -b 2048</code></pre>
 <ol>
