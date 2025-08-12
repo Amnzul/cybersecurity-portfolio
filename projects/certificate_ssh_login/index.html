@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Network Capacity Testing Project</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Certificate SSH Logins</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="certificate_logins">
+
+<h2> Certificate SSH Login Project Overview</h2>
+
+<p>I am assuming SSH Server is already running on your target server</P>
+To use an SSH certificate (key-based authentication) instead of a password to log in remotely we need to first generate a key
+
+<h2?Generate an SSH Key Pair on the Local Machine:</h2>
+
+<pre><code>ssh-keygen -t rsa -b 2048</code></pre>
+<ol>
+<li> ssh-keygen is the command-line utility used to create authentication keys </li>
+<li> -t rsa is used to specify which algorithm is used to generate the keys. In this case the RSA (Rivest-Shamir-Adleman) algorithm, which is one of the most widely used for SSH authentication.</li>
+<li> -b 2048 specifies how many bits the key is. This key will be 2048 bits long. 4096 bit keys can be used for enhanced security, but they may result in slower performance. </li>
+<li> The output will include two files: the private key (which should be kept secure) and the public key (which can be shared with servers to allow secure access).</li>
+<li> The default file locations for the private key (id_rsa) and public key (id_rsa.pub) is in the ~/.ssh directory. </li>
+</ol>
+
+<img src="linux_keygen.png">
+
+<p>This command also works on Microsoft Windows.</p>
+
+<img src="win_keygen.png">
+
+
+<h2>Copy Your Public Key to the Linux Server:</h2>
+
+<h3> On Linux: </h3>
+<p>Use the ssh-copy-id command to install your public key on the remote server:</p>
+
+<pre><code>ssh-copy-id user@remote_server_ip</code></pre>
+
+<img src="ssh_copy_id.png">
+
+<h3> On Windows: </h3>
+<p>Microsoft users will do not have the ssh-copy-id command and will have copy their key using another method.</p>
+
+scp /path/to/local/file username@remote_host:/path/to/remote/directory/
+
+
+
+<h2>Verify SSH Certificate Key Based Login is Working:</h2>
+
+<p>Attempt to SSH into the server:</p>
+
+<pre><code>ssh user@remote_server_ip</code></pre>
+
+<p>If set up correctly, you should log in without being asked for a password.</p>
+
+<img src="ssh_connection.png">
+
+
+
+
+
+<h2>Conclusions</h2>
+<p>In the course of this project I learned about various algorithms used to generate keys, and how bit length affects security. Apparently there are still some old systems in the wild with insecure key lengths that are vulnerable and appear in the news from time to time after a breach.</p>
+<p>Projects for the future might include trying to break a 512 bit key, or setting up a CA (Certificate Authority) </P>
+
+
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+<footer>
+<p>&copy; 2025 Mr. W. All rights reserved.</p>
+<div class="footer">
+<a href="https://amnzul.github.io/cybersecurity-portfolio/">Home</a>
+</div>
+</footer>
+</body>
+</html>
