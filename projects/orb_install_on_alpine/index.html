@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orb Network Monitoring Install Project</title>
+  <link rel="stylesheet" href="../../styles.css"/>
+  <style>
+    /* Override: Remove canvas/matrix rain for this page */
+    #matrix-rain { display: none !important; }
+    body {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mr. W. - Orb Network Monitoring Install</h1>
+    <nav>
+      <a href="../../index.html">Portfolio Home</a>
+    </nav>
+  </header>
+
+<section id="orb_network_monitoring">
+
+<h2>Orb Network Monitoring Project Overview</h2>
+<p>This project involved installing an Orb Sensor on an Alpine Container in Proxmox to monitor network and internet performance.</p>
+
+  
+<h2>Software</h2>
+<p>Orb is a free network monitoring utility for rating internet responsiveness, reliability, and speed available at <a href="https://orb.net/">https://orb.net/</a></p>
+<p>Orb works with a dashboard and a sensor. I will run the app on my mobile phone, and the sensor on an Alpine Linux container in a Proxmox server. Many options are available for where it can be run.</p>
+  
+<h2>Environment Setup</h2>
+<p><strong>Router Configuration:</strong> Enabled SSH access through the ASUS router firmware interface (Asus Router Firmware &gt; Administration &gt; System Tab &gt; Service Section &gt; Enable SSH (only on LAN)) to allow remote command line access.</p>
+<P>I used a helper script to quickly install an Alpine Linux container in Proxmox. The script is available at this repository for <a hred="https://community-scripts.github.io/ProxmoxVE/scripts?id=alpine&category=Operating+Systems">Proxmox VE Helper Scripts on github</a></P>
+<img src="01 - proxmox alpine container install.png">
+
+<p>Run the script provided in the Proxmox shell.</p>
+  
+<img src="02 - proxmox alpine container install from shell.png">
+
+<h2>Orb Sensor Setup</h2>
+ 
+<img src="03 - orb sensor install instructions.png">
+
+<P>Run the commands in the terminal.</P>
+  
+<img src="04 - orb install terminal.png">
+
+  
+<h2>Performance Findings &amp; Analysis</h2>
+<img src="orb app on ios.jpg">
+<P>The ratings are all in the green, but I have a fiber optic connection. I was expecting to see better upload/download numbers.</P>
+
+<h2>Conclusions</h2>
+
+<P>It could be helpful to have instantaneous insight into network performance if I am experiencing latency somethere. </P>
+<p>This can serve as a method to document baseline performance metrics for future comparative analysis.</p>
+<P>I will keep the Orb sensor running and get some more data to see what it looks like over time.</P>
+  
+<p>That’s it!</p>
+<p></p>
+<p></p>
+<p></p>
+    
+</section>
+<footer>
+<p>&copy; 2025 Mr. W. All rights reserved.</p>
+<div class="footer">
+<a href="https://amnzul.github.io/cybersecurity-portfolio/">Home</a>
+</div>
+</footer>
+</body>
+</html>
