@@ -34,14 +34,14 @@
 <h2>Environment Setup</h2>
 <P>I used a helper script to quickly install an Alpine Linux container in Proxmox. The script is available at this repository for <a href="https://community-scripts.github.io/ProxmoxVE/scripts?id=alpine&category=Operating+Systems">Proxmox VE Helper Scripts on github.</a></P>
 <img src="01 - proxmox alpine container install.png">
-<p>Run the script provided in the Proxmox shell.</p>
+<p>Run the following script provided in the Proxmox shell:</p>
 <pre><code>   bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/alpine.sh)"</code></pre>
 <img src="02 - proxmox alpine container install from shell.png">
 <p>Alpine should be all set to go in its own container. On to the Orb install!</p>
   
 <h2>Orb Sensor Setup</h2>
 <img src="03 - orb sensor install instructions.png">
-<P>Run the commands in the terminal.</P>
+<P>Run the following commands in the terminal:</P>
 <pre><code>
   echo https://pkgs.orb.net/stable/alpine | tee -a /etc/apk/repositories
   wget -O /etc/apk/keys/packages@orb.net.rsa.pub https://pkgs.orb.net/stable/alpine/orb.pub
